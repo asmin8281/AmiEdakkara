@@ -1,0 +1,251 @@
+=========================================
+ADD QUESTION PAPER SYSTEM - FULL CODE
+=========================================
+
+1. HTML STRUCTURE
+-----------------
+(Add this into your study-materials.html inside the <main> tag)
+
+<!-- Question Paper Upload Form -->
+<section id="add-question-paper" class="upload-section">
+    <div class="container">
+        <div class="upload-form-container">
+            <h2 class="section-title"><i class="fas fa-plus-circle"></i> Add Question Paper</h2>
+            <p class="upload-description">Add real public PDF links for question papers. No file uploads required.</p>
+            
+            <form id="question-paper-form" class="paper-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="class-select">Class / Standard *</label>
+                        <select id="class-select" required>
+                            <option value="">Select Class</option>
+                            <option value="1">Class 1</option>
+                            <option value="2">Class 2</option>
+                            <option value="3">Class 3</option>
+                            <option value="4">Class 4</option>
+                            <option value="5">Class 5</option>
+                            <option value="6">Class 6</option>
+                            <option value="7">Class 7</option>
+                            <option value="8">Class 8</option>
+                            <option value="9">Class 9</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject-input">Subject *</label>
+                        <input type="text" id="subject-input" placeholder="e.g., Arabic, Quran" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="exam-type">Exam Type *</label>
+                        <select id="exam-type" required>
+                            <option value="">Select Exam Type</option>
+                            <option value="Unit Test">Unit Test</option>
+                            <option value="Mid Term">Mid Term</option>
+                            <option value="Final">Final Year</option>
+                            <option value="half">Half Year</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="year-input">Year *</label>
+                        <input type="number" id="year-input" placeholder="e.g., 2026" min="2020" max="2100" required>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="pdf-link">
+                        Public PDF Link *
+                        <button type="button" class="help-btn" onclick="showHelpModal()">
+                            <i class="fas fa-question-circle"></i>
+                        </button>
+                    </label>
+                    <input type="url" id="pdf-link" placeholder="https://drive.google.com/file/d/.../view" required>
+                    <small class="form-hint">Must be a public Google Drive link or direct PDF URL</small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Question Paper
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Help Modal for Links -->
+<div id="help-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-question-circle"></i> Link Guide</h3>
+            <button class="modal-close" onclick="closeHelpModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <h4>Google Drive Method:</h4>
+            <ol>
+                <li>Right-click PDF in Drive -> Share</li>
+                <li>Set to "Anyone with link can view"</li>
+                <li>Copy and paste that link here</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+2. JAVASCRIPT LOGIC
+------------------
+(Add this script block to the bottom of study-materials.html before the </body> tag)
+
+<script>
+    class QuestionPaperManager {
+        constructor() {
+            this.papers = this.loadPapers();
+            this.form = document.getElementById('question-paper-form');
+            this.init();
+        }
+
+        init() {
+            if(this.form) this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+            this.renderAllPapers();
+        }
+
+        loadPapers() {
+            const stored = localStorage.getItem('questionPapers');
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        savePapers() {
+            localStorage.setItem('questionPapers', JSON.stringify(this.papers));
+        }
+
+        handleSubmit(e) {
+            e.preventDefault();
+            const paper = {
+                id: Date.now().toString(36),
+                class: document.getElementById('class-select').value,
+                subject: document.getElementById('subject-input').value.trim(),
+                examType: document.getElementById('exam-type').value,
+                year: document.getElementById('year-input').value,
+                pdfLink: document.getElementById('pdf-link').value.trim(),
+                title: `${document.getElementById('subject-input').value} - ${document.getElementById('exam-type').value}`
+            };
+
+            this.papers.push(paper);
+            this.savePapers();
+            this.form.reset();
+            this.renderAllPapers();
+            alert('Paper added successfully!');
+        }
+
+        createPaperCard(paper) {
+            const card = document.createElement('div');
+            card.className = 'paper-card uploaded-paper';
+            card.innerHTML = `
+                <div class="paper-icon"><i class="fas fa-file-pdf"></i></div>
+                <h4>${paper.title}</h4>
+                <p>${paper.subject} - ${paper.examType}</p>
+                <div class="paper-actions">
+                    <a href="${paper.pdfLink}" class="paper-link" target="_blank">View PDF</a>
+                    <button class="delete-btn" onclick="paperManager.deletePaper('${paper.id}')">Delete</button>
+                </div>
+            `;
+            return card;
+        }
+
+        renderAllPapers() {
+            document.querySelectorAll('.uploaded-paper').forEach(card => card.remove());
+            document.querySelectorAll('.coming-soon').forEach(el => el.style.display = 'flex');
+
+            this.papers.forEach(paper => {
+                const classHeaders = document.querySelectorAll('.class-category h3');
+                classHeaders.forEach(header => {
+                    if (header.textContent.includes(`Class ${paper.class}`)) {
+                        const grid = header.parentElement.querySelector('.papers-grid');
+                        if (grid) {
+                            const placeholder = grid.querySelector('.coming-soon');
+                            if (placeholder) placeholder.style.display = 'none';
+                            grid.appendChild(this.createPaperCard(paper));
+                        }
+                    }
+                });
+            });
+        }
+
+        deletePaper(id) {
+            if (confirm('Are you sure you want to delete this paper?')) {
+                this.papers = this.papers.filter(p => p.id !== id);
+                this.savePapers();
+                this.renderAllPapers();
+            }
+        }
+    }
+
+    // Initialize the manager
+    const paperManager = new QuestionPaperManager();
+    
+    // Help Modal Functions
+    function showHelpModal() { document.getElementById('help-modal').style.display = 'block'; }
+    function closeHelpModal() { document.getElementById('help-modal').style.display = 'none'; }
+</script>
+
+
+3. CSS STYLING
+--------------
+(Add these styles to your styles.css)
+
+.upload-section {
+    background: #f8f9fa;
+    padding: 3rem 0;
+}
+
+.upload-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.papers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.paper-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    transition: transform 0.3s ease;
+}
+
+.paper-card:hover { transform: translateY(-5px); }
+
+.delete-btn {
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.coming-soon {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2.5rem;
+    background: rgba(99, 102, 241, 0.03);
+    border: 2px dashed rgba(99, 102, 241, 0.15);
+    border-radius: 16px;
+    color: #64748b;
+    font-style: italic;
+    font-weight: 500;
+}
