@@ -1160,7 +1160,7 @@ footer {
 
 .video-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
 }
 
@@ -2425,6 +2425,10 @@ code {
     }
 
     /* Mobile fixes for video cards */
+    .video-grid-section {
+        padding: 2rem 0;
+    }
+
     .video-grid {
         grid-template-columns: 1fr !important;
         gap: 1rem;
@@ -2481,5 +2485,24 @@ code {
         text-align: center;
         padding: 0.5rem;
         font-size: 0.8rem;
+    }
+}
+
+/* Additional mobile fix for very small screens */
+@media (max-width: 480px) {
+    .video-grid-section {
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    .video-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 0.8rem !important;
+    }
+    
+    .video-card {
+        display: block !important;
+        visibility: visible !important;
     }
 }
