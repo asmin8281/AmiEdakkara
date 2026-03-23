@@ -3,21 +3,21 @@
 /* Gilroy Font Family */
 @font-face {
     font-family: 'Gilroy';
-    src: url('../font/gilroy-bold/Gilroy-Regular.ttf') format('truetype');
+    src: url('Gilroy-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Gilroy';
-    src: url('../font/gilroy-bold/Gilroy-Bold.ttf') format('truetype');
+    src: url('Gilroy-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Gilroy';
-    src: url('../font/gilroy-bold/Gilroy-Medium.ttf') format('truetype');
+    src: url('Gilroy-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
 }
@@ -522,7 +522,7 @@ header {
     display: inline-block;
 
     /* ── Real sky texture image, panning across a wide canvas ── */
-    background-image: url('../img/sky-texture.png');
+    background-image: url('sky-texture.png');
     background-size: 300% auto;
     background-position: 0% center;
     -webkit-background-clip: text;
