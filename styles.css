@@ -319,6 +319,13 @@ header {
     transition: all 0.3s ease;
 }
 
+/* Navigation overflow fix for small screens */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .navbar {
     padding: 0;
 }
