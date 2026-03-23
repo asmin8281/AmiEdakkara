@@ -1231,6 +1231,7 @@ footer {
     text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
+    border-radius: 25px;
     transition: all 0.25s ease;
 }
 
@@ -2453,6 +2454,7 @@ code {
     .video-link {
         padding: 0.5rem 0.8rem;
         font-size: 0.8rem;
+        border-radius: 20px;
     }
 
     /* Mobile fixes for paper cards */
