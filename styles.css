@@ -513,9 +513,9 @@ header {
 }
 
 .madrasa-name {
-    font-family: 'Gilroy', 'Outfit', 'Inter', sans-serif;
+    font-family: 'Helvetica', 'Helvetica-Bold', sans-serif;
     font-size: 4.5rem;
-    font-weight: 900;
+    font-weight: bold;
     line-height: 1.1;
     letter-spacing: -0.03em;
     margin-bottom: 2rem;
