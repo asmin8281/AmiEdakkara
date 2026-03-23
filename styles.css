@@ -2423,4 +2423,63 @@ code {
         width: 80px;
         height: 80px;
     }
+
+    /* Mobile fixes for video cards */
+    .video-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        padding: 0 10px;
+    }
+
+    .video-card {
+        padding: 1rem;
+        min-height: auto;
+    }
+
+    .video-card h4 {
+        font-size: 1rem;
+        padding: 0.8rem 0.8rem 0.3rem;
+    }
+
+    .video-card p {
+        font-size: 0.8rem;
+        padding: 0 0.8rem;
+    }
+
+    .video-link {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    /* Mobile fixes for paper cards */
+    .papers-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        padding: 0 10px;
+    }
+
+    .paper-card {
+        padding: 1rem;
+    }
+
+    .paper-card h4 {
+        font-size: 1rem;
+    }
+
+    .paper-card p {
+        font-size: 0.8rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .paper-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .paper-link {
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
 }
