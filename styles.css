@@ -513,9 +513,9 @@ header {
 }
 
 .madrasa-name {
-    font-family: 'Helvetica', 'Helvetica-Bold', sans-serif;
+    font-family: 'Rubik', 'Rubik-Black', sans-serif;
     font-size: 4.5rem;
-    font-weight: bold;
+    font-weight: 900;
     line-height: 1.1;
     letter-spacing: -0.03em;
     margin-bottom: 2rem;
