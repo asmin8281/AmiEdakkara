@@ -391,6 +391,22 @@ header {
     transition: width 0.3s ease;
 }
 
+/* Responsive Video Wrapper for YouTube Embeds */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
 /* Responsive Design - Unified Approach */
 
 /* Tablet and below (768px) */
@@ -500,8 +516,8 @@ header {
 
     /* Teachers Grid */
     .teachers-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem;
+        grid-template-columns: 1fr;
+        gap: 20px;
         padding: 0 10px;
     }
 
@@ -1199,8 +1215,8 @@ footer {
 
 .teachers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
 .teacher-card {
