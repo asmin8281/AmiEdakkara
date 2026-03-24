@@ -398,20 +398,16 @@ nav {
     transition: width 0.3s ease;
 }
 
-/* Responsive Video Wrapper for YouTube Embeds */
-.video-wrapper {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
+/* Responsive Video Container for YouTube Embeds */
+.video-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
 }
 
-.video-wrapper iframe {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 /* Responsive Design - Unified Approach */
@@ -526,12 +522,19 @@ nav {
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 0 10px;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
     .teacher-card {
         padding: 1.5rem;
         margin-bottom: 1rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
     }
     
     .teacher-image {
@@ -548,11 +551,28 @@ nav {
         grid-template-columns: 1fr !important;
         gap: 1rem;
         padding: 0 10px;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+.video-card {
+    padding: 1rem;
+    min-height: auto;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+    .video-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
     }
 
-    .video-card {
-        padding: 1rem;
-        min-height: auto;
+    .video-container iframe {
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
     }
 
     .video-card h4 {
@@ -1222,8 +1242,11 @@ footer {
 
 .teachers-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .teacher-card {
@@ -1234,6 +1257,10 @@ footer {
     border: 1px solid rgba(99, 102, 241, 0.08);
     text-align: center;
     transition: all 0.3s var(--transition);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .teacher-card:hover {
@@ -1363,6 +1390,9 @@ footer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .video-card {
@@ -1372,6 +1402,9 @@ footer {
     border: 1px solid rgba(99, 102, 241, 0.08);
     overflow: hidden;
     transition: all 0.3s var(--transition);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .video-card:hover {
@@ -1992,6 +2025,24 @@ footer {
     }
 }
 
+/* Medium Tablets (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .teachers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .teacher-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+}
+
 /* Mobile and below (480px) */
 @media (max-width: 480px) {
     .container {
@@ -2064,6 +2115,30 @@ footer {
 
     .info-item p {
         font-size: 0.9rem;
+    }
+
+    /* Teachers Grid - Extra Small Screens */
+    .teachers-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0 5px;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .teacher-card {
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    
+    .teacher-image {
+        width: 70px;
+        height: 70px;
     }
 
     /* Ensure YouTube section visibility */
