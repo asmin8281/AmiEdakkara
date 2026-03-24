@@ -274,7 +274,7 @@
         </section>
 
         <!-- YouTube Classes Section -->
-        <section class="youtube-classes-section">
+        <!-- <section class="youtube-classes-section">
             <div class="container">
                 <h2 class="section-title">
                     <i class="fab fa-youtube"></i>
@@ -319,7 +319,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         </main>
 
@@ -584,30 +584,32 @@
                     }
                 });
             });
-        // Filter functionality
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const section = this.closest('.filter-controls').dataset.section;
-                const classNum = this.dataset.class;
-                const sectionEl = document.getElementById(section);
-                
-                // Update active button in this section's filter
-                this.closest('.filter-controls').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Filter class categories
-                const categories = sectionEl.querySelectorAll('.class-category');
-                categories.forEach(cat => {
-                    if (classNum === 'all') {
-                        cat.classList.remove('hidden');
-                    } else {
-                        const title = cat.querySelector('h3').textContent;
-                        if (title.includes(`Class ${classNum}`)) {
+            
+            // Filter functionality
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const section = this.closest('.filter-controls').dataset.section;
+                    const classNum = this.dataset.class;
+                    const sectionEl = document.getElementById(section);
+                    
+                    // Update active button in this section's filter
+                    this.closest('.filter-controls').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter class categories
+                    const categories = sectionEl.querySelectorAll('.class-category');
+                    categories.forEach(cat => {
+                        if (classNum === 'all') {
                             cat.classList.remove('hidden');
                         } else {
-                            cat.classList.add('hidden');
+                            const title = cat.querySelector('h3').textContent;
+                            if (title.includes(`Class ${classNum}`)) {
+                                cat.classList.remove('hidden');
+                            } else {
+                                cat.classList.add('hidden');
+                            }
                         }
-                    }
+                    });
                 });
             });
         });

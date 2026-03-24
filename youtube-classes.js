@@ -149,8 +149,8 @@ function updateActiveVideo(activeVideoId) {
     if (activeItem) {
         activeItem.classList.add('active');
         
-        // Scroll to active video
-        activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Removed automatic scrolling to prevent unwanted page scroll
+        // activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 }
 
