@@ -1644,7 +1644,8 @@ nav {
     /* Navigation */
     .nav-menu {
         position: fixed;
-        left: -100%;
+        right: -100%;
+        left: auto;
         top: 80px;
         flex-direction: column;
         background-color: #ffffff; border: 2px solid #ffffff;
@@ -1658,7 +1659,8 @@ nav {
     }
 
     .nav-menu.active {
-        left: 0;
+        right: 0;
+        left: auto;
     }
 
     .nav-menu .nav-link {
@@ -6757,7 +6759,8 @@ footer {
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
-        left: -100%;
+        right: -100%;
+        left: auto;
         top: 80px;
         flex-direction: column;
         background-color: #ffffff; border: 2px solid #ffffff;
@@ -6770,7 +6773,8 @@ footer {
     }
 
     .nav-menu.active {
-        left: 0;
+        right: 0;
+        left: auto;
     }
 
     .nav-menu.active .nav-link {
@@ -6994,7 +6998,8 @@ footer {
     /* Navigation */
     .nav-menu {
         position: fixed;
-        left: -100%;
+        right: -100%;
+        left: auto;
         top: 80px;
         flex-direction: column;
         background-color: #ffffff; border: 2px solid #ffffff;
@@ -7008,7 +7013,8 @@ footer {
     }
 
     .nav-menu.active {
-        left: 0;
+        right: 0;
+        left: auto;
     }
 
     .nav-menu .nav-link {
@@ -11638,7 +11644,8 @@ code {
         display: none;
         position: fixed;
         top: 0;
-        left: -100%;
+        right: -100%;
+        left: auto;
         width: 100%;
         background: #0f172a;
         padding: 2rem 0;
@@ -11647,7 +11654,8 @@ code {
     }
     
     .nav-menu.active {
-        left: 0;
+        right: 0;
+        left: auto;
     }
     
     .hamburger {
@@ -11777,4 +11785,62 @@ code {
         margin: 2px 0;
         transition: all 0.3s ease;
     }
+}
+
+/* --- MOBILE NAV MENU FIX: Slide from right --- */
+@media (max-width: 768px) {
+    /* Ensure the wrapper doesn't crop */
+    body {
+        overflow-x: hidden;
+    }
+
+    .nav-menu {
+        /* Force display but use transform/right for animation to work smoothly */
+        display: flex !important;
+        position: fixed !important;
+        top: 85px !important;
+        right: -100% !important; /* start completely off-screen to the right */
+        left: auto !important;
+        width: 100% !important;
+        height: calc(100vh - 85px) !important;
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        padding: 2rem 0 !important;
+        border-top: 1px solid rgba(79, 70, 229, 0.1) !important;
+        transition: right 0.4s cubic-bezier(0.25, 1, 0.3, 1) !important;
+        z-index: 999 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.05) !important;
+    }
+
+    .nav-menu.active {
+        right: 0 !important;
+    }
+
+    .hamburger {
+        z-index: 1000 !important;
+    }
+}
+
+/* --- CARDS CLICK FIX --- */
+/* Add a background color and scale down for tactile feedback when cards are clicked */
+.card:active,
+.feature-card:active,
+.teacher-card:active,
+.paper-card:active,
+.info-item:active,
+.video-card:active,
+.gallery-item:active,
+.border-glow-card:active {
+    background-color: rgba(99, 102, 241, 0.15) !important; 
+    transform: translateY(-2px) scale(0.98) !important; /* Slight push down effect */
+    transition: background-color 0.1s ease, transform 0.1s ease !important;
+    border-color: transparent !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
 }

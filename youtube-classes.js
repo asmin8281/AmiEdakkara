@@ -73,6 +73,7 @@ let videoList = document.getElementById('video-list');
 let searchInput = document.getElementById('video-search');
 let searchBtn = document.getElementById('search-btn');
 let currentVideo = null;
+let currentClassFilter = 'all';
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -89,6 +90,9 @@ function setupEventListeners() {
     
     // Keyboard shortcuts
     document.addEventListener('keydown', handleKeyboardShortcuts);
+    
+    // Filter controls
+    setupFilterListeners();
 }
 
 // Render video list
@@ -156,25 +160,48 @@ function updateActiveVideo(activeVideoId) {
 
 // Search functionality
 function handleSearch() {
-    const searchTerm = searchInput.value.toLowerCase().trim();
-    
-    if (searchTerm === '') {
-        renderVideoList(videos);
-        return;
-    }
-    
-    const filteredVideos = videos.filter(video => 
-        video.title.toLowerCase().includes(searchTerm) ||
-        video.description.toLowerCase().includes(searchTerm)
-    );
-    
-    renderVideoList(filteredVideos);
+    renderFilteredVideos();
 }
 
 // Clear search
 function clearSearch() {
     searchInput.value = '';
-    renderVideoList(videos);
+    renderFilteredVideos();
+}
+
+// Combined filtering mechanism
+function renderFilteredVideos() {
+    let filteredVideos = videos;
+
+    if (currentClassFilter !== 'all') {
+        filteredVideos = filteredVideos.filter(video => video.title.includes('Class ' + currentClassFilter));
+    }
+
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    if (searchTerm !== '') {
+        filteredVideos = filteredVideos.filter(video => 
+            video.title.toLowerCase().includes(searchTerm) ||
+            video.description.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    renderVideoList(filteredVideos);
+}
+
+// Filter button logic
+function setupFilterListeners() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const container = this.closest('.filter-controls');
+            if (container) {
+                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            }
+            this.classList.add('active');
+            
+            currentClassFilter = this.dataset.class;
+            renderFilteredVideos();
+        });
+    });
 }
 
 // Keyboard shortcuts
