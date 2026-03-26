@@ -76,21 +76,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1200);
     }
 
-    hamburger.addEventListener('click', function() {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+    function toggleNav() {
+        const isOpen = navMenu.classList.toggle('active');
+        hamburger.classList.toggle('active', isOpen);
+        document.body.classList.toggle('nav-open', isOpen);
+    }
+
+    hamburger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggleNav();
     });
 
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function() {
-            hamburger.classList.remove('active');
+    // Close when clicking outside nav or hamburger
+    document.addEventListener('click', function (e) {
+        if (!navMenu.classList.contains('active')) return;
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
             navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.classList.remove('nav-open');
+        }
+    });
 
-            // Trigger text animation on the next loaded page
-            const href = link.getAttribute('href');
-            if (!prefersReducedMotion && href && href.endsWith('.html')) {
-                sessionStorage.setItem('animateTextOnLoad', '1');
+    // Close on Escape
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.classList.remove('nav-open');
+        }
+    });
+
+    // Close when clicking a nav link (mobile)
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function () {
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.classList.remove('nav-open');
             }
         });
     });

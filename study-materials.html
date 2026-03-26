@@ -421,19 +421,25 @@
             }
         ];
 
-        // DOM Elements
-        let mainVideoPlayer = document.getElementById('main-video-player');
-        let videoList = document.getElementById('video-list');
-        let searchInput = document.getElementById('video-search');
-        let searchBtn = document.getElementById('search-btn');
-        let currentVideo = null;
+    // DOM Elements
+    let mainVideoPlayer = document.getElementById('main-video-player');
+    let videoList = document.getElementById('video-list');
+    let searchInput = document.getElementById('video-search');
+    let searchBtn = document.getElementById('search-btn');
+    let currentVideo = null;
+    // Prevent automatic scrolling when the page first loads and activates the initial video
+    let suppressActiveScroll = false;
 
         // Initialize the YouTube classes system
         function initYouTubeClasses() {
             if (mainVideoPlayer && videoList) {
                 renderVideoList(videos);
                 setupEventListeners();
+                // Suppress scrolling for the initial activation so the page doesn't jump/auto-scroll
+                suppressActiveScroll = true;
                 loadVideo('class1-intro'); // Load first video by default
+                // Allow user-triggered activations to scroll normally after initialization
+                window.setTimeout(() => { suppressActiveScroll = false; }, 50);
             }
         }
 
@@ -504,9 +510,11 @@
             const activeItem = document.querySelector(`[data-video-id="${activeVideoId}"]`);
             if (activeItem) {
                 activeItem.classList.add('active');
-                
-                // Scroll to active video
-                activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                // Scroll to active video only if not suppressed (prevents automatic scroll on page load)
+                if (!suppressActiveScroll) {
+                    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
             }
         }
 
