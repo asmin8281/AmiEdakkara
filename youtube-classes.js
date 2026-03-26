@@ -241,12 +241,6 @@ function navigateVideoList(direction) {
     loadVideo(allItems[newIndex].dataset.videoId);
 }
 
-// Mobile menu toggle (if needed)
-function toggleMobileMenu() {
-    const navMenu = document.querySelector('.nav-menu');
-    navMenu.classList.toggle('active');
-}
-
 // Utility functions
 function formatDuration(duration) {
     return duration;

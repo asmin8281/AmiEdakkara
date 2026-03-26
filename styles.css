@@ -11844,3 +11844,132 @@ code {
     outline: none !important;
     -webkit-tap-highlight-color: transparent !important;
 }
+
+/* ====================================================
+   AUTHORITATIVE MOBILE NAV — final override (end of file)
+   ==================================================== */
+
+/* Desktop: hide hamburger icon */
+.hamburger {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+
+    /* Show hamburger icon on mobile */
+    .hamburger {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        padding: 0.45rem 0.55rem;
+        border-radius: 8px;
+        background: rgba(30, 64, 175, 0.12);
+        border: 1px solid rgba(30, 64, 175, 0.25);
+        z-index: 10001;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .hamburger span {
+        display: block !important;
+        width: 22px;
+        height: 2.5px;
+        background: #1e40af;
+        border-radius: 2px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        margin: 0;
+    }
+
+    /* Hamburger → X animation */
+    .hamburger.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    /* HIDE the nav menu completely on mobile by default */
+    .nav-menu {
+        display: none !important;
+    }
+
+    /* SHOW as side drawer sliding from the RIGHT when toggled */
+    .nav-menu.active {
+        display: flex !important;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        left: auto !important;
+        bottom: 0 !important;
+        width: 72vw !important;
+        max-width: 280px !important;
+        height: 100vh !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        background: #ffffff !important;
+        box-shadow: -6px 0 32px rgba(0, 0, 0, 0.22) !important;
+        padding: 5rem 1rem 2rem !important;
+        z-index: 10000 !important;
+        overflow-y: auto !important;
+        gap: 0.25rem !important;
+        list-style: none !important;
+        margin: 0 !important;
+        animation: slideInFromRight 0.32s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    @keyframes slideInFromRight {
+        from { transform: translateX(100%); }
+        to   { transform: translateX(0); }
+    }
+
+    /* Nav list items */
+    .nav-menu.active li,
+    .nav-menu.active > li {
+        list-style: none !important;
+        width: 100% !important;
+    }
+
+    /* Nav links inside the drawer */
+    .nav-menu.active .nav-link,
+    .nav-menu.active li > a {
+        display: block !important;
+        width: 100% !important;
+        text-align: left !important;
+        padding: 0.85rem 1.1rem !important;
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        color: #1e293b !important;
+        border-radius: 10px !important;
+        background: transparent !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+        transform: none !important;
+        transition: background 0.2s ease, color 0.2s ease !important;
+    }
+
+    .nav-menu.active .nav-link:hover,
+    .nav-menu.active li > a:hover {
+        background: rgba(30, 64, 175, 0.1) !important;
+        color: #1e40af !important;
+    }
+
+    .nav-menu.active .nav-link.active,
+    .nav-menu.active li > a.active {
+        background: rgba(30, 64, 175, 0.15) !important;
+        color: #1e40af !important;
+        font-weight: 600 !important;
+    }
+
+    /* Dark overlay behind drawer when nav is open */
+    body.nav-open::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 9999;
+    }
+}
+
