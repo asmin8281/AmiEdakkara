@@ -108,11 +108,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close when clicking a nav link (mobile)
     navMenu.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function () {
-            if (navMenu.classList.contains('active')) {
+        link.addEventListener('click', function (e) {
+            const isMobile = navMenu.classList.contains('active');
+            
+            if (isMobile) {
+                // Close the mobile nav UI
                 navMenu.classList.remove('active');
                 hamburger.classList.remove('active');
                 document.body.classList.remove('nav-open');
+                
+                const href = this.getAttribute('href');
+                if (!href) return;
+                const isInternalHtml = href.endsWith('.html') && !href.startsWith('http') && !href.startsWith('mailto') && !href.startsWith('tel');
+                
+                if (isInternalHtml) {
+                    // Prevent double-handling by other listeners and navigate after drawer closed.
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Preserve the small text animation state used elsewhere
+                    try { sessionStorage.setItem('animateTextOnLoad', '1'); } catch (err) {}
+                    // Short delay so the close transition can run smoothly before navigation
+                    setTimeout(() => { window.location.href = href; }, 150);
+                }
+            } else {
+                try { sessionStorage.setItem('animateTextOnLoad', '1'); } catch (err) {}
             }
         });
     });
