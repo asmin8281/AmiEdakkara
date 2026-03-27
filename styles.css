@@ -24,9 +24,12 @@ html, body {
     pointer-events: auto !important;
 }
 
-/* Keep the background overlay below the nav drawer */
+/* Keep the background overlay below the nav drawer - DISABLED */
 body.nav-open::before {
     z-index: 10000 !important;
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 /* Madrasa name - main heading (increased size) */
@@ -16587,7 +16590,7 @@ h1.madrasa-name {
         overflow: hidden !important;
     }
 
-    /* Dark overlay behind nav when open - DISABLED */
+    /* Dark overlay behind nav when open - COMPLETELY DISABLED */
     body.nav-open::before {
         content: '' !important;
         position: fixed !important;
@@ -16598,6 +16601,8 @@ h1.madrasa-name {
         background: transparent !important;
         z-index: 10000 !important;
         pointer-events: none !important;
+        display: none !important;
+        visibility: hidden !important;
         display: none !important;
     }
 }
