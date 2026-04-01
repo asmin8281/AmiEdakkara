@@ -28,12 +28,11 @@
                 <ul class="nav-menu nav-links" id="navLinks">
                     <li><a href="index.html" class="nav-link">Home</a></li>
                     <li><a href="about.html" class="nav-link">About</a></li>
-                    <li><a href="study-materials.html#youtube-section" class="nav-link">YouTube Classes</a></li>
                     <li><a href="study-materials.html" class="nav-link active">Study Materials</a></li>
                     <li><a href="gallery.html" class="nav-link">Gallery</a></li>
                     <li><a href="contact.html" class="nav-link">Contact</a></li>
                     <!-- Back button (mobile) -->
-                    <button class="close-btn" id="closeMenu">Close ✖</button>
+                
                 </ul>
             </div>
         </nav>
@@ -279,61 +278,13 @@
         </section>
 
         <!-- YouTube Classes Section -->
-        <!-- <section class="youtube-classes-section">
-            <div class="container">
-                <h2 class="section-title">
-                    <i class="fab fa-youtube"></i>
-                    YouTube Classes
-                </h2>
-                
-                <div class="video-content-wrapper">
-                    <!-- Main Video Player -->
-                    <div class="video-player-container">
-                        <div class="video-container">
-                            <iframe 
-                                id="main-video-player"
-                                src="https://www.youtube.com/embed/dMCz8dvIpTQ" 
-                                title="YouTube video player - Class 1 Introduction"
-                                frameborder="0" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                    
-                    <!-- Video Playlist Sidebar -->
-                    <div class="playlist-sidebar">
-                        <div class="playlist-header">
-                            <h3><i class="fas fa-list"></i> Class Videos</h3>
-                            <div class="search-box">
-                                <input 
-                                    type="text" 
-                                    id="video-search" 
-                                    placeholder="Search videos..."
-                                    class="search-input">
-                                <button class="search-btn" id="search-btn">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="playlist-container">
-                            <ul class="video-list" id="video-list">
-                                <!-- Videos will be populated by JavaScript -->
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-
-        <!-- YouTube Classes Section -->
         <section class="video-player-section" id="youtube-section">
             <div class="container">
                 <h2 class="section-title">
                     <i class="fab fa-youtube"></i>
                     YouTube Classes
                 </h2>
-                
+                <p>The classes are dummy we will update soon</p>
                 <div class="filter-controls youtube-filter-controls" data-section="youtube-classes" style="margin-bottom: 2rem;">
                     <button class="filter-btn active" data-class="all">All</button>
                     <button class="filter-btn" data-class="1">Class 1</button>
@@ -346,7 +297,6 @@
                     <button class="filter-btn" data-class="8">Class 8</button>
                     <button class="filter-btn" data-class="9">Class 9</button>
                 </div>
-
                 <div class="video-content-wrapper">
                     <!-- Main Video Player -->
                     <div class="video-player-container">
@@ -385,7 +335,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> 
 
         </main>
 
@@ -402,6 +352,7 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="study-materials.html">Study Materials</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -662,32 +613,60 @@
             // Filter functionality
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const section = this.closest('.filter-controls').dataset.section;
+                    const sectionContainer = this.closest('.filter-controls');
+                    const section = sectionContainer.dataset.section;
                     const classNum = this.dataset.class;
-                    const sectionEl = document.getElementById(section);
                     
                     // Update active button in this section's filter
-                    this.closest('.filter-controls').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    sectionContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Filter class categories
-                    const categories = sectionEl.querySelectorAll('.class-category');
-                    categories.forEach(cat => {
-                        if (classNum === 'all') {
-                            cat.classList.remove('hidden');
-                        } else {
-                            const title = cat.querySelector('h3').textContent;
-                            if (title.includes(`Class ${classNum}`)) {
-                                cat.classList.remove('hidden');
-                            } else {
-                                cat.classList.add('hidden');
+                    // Filter Youtube Classes
+                    if (section === 'youtube-classes') {
+                        let filteredVideos = videos;
+                        if (classNum !== 'all') {
+                            filteredVideos = filteredVideos.filter(video => video.title.includes('Class ' + classNum));
+                        }
+                        
+                        // Apply active search term as well, if any
+                        const searchInput = document.getElementById('video-search');
+                        if (searchInput) {
+                            const searchTerm = searchInput.value.toLowerCase().trim();
+                            if (searchTerm !== '') {
+                                filteredVideos = filteredVideos.filter(video => 
+                                    video.title.toLowerCase().includes(searchTerm) ||
+                                    video.description.toLowerCase().includes(searchTerm)
+                                );
                             }
                         }
-                    });
+                        
+                        renderVideoList(filteredVideos);
+                        if (filteredVideos.length > 0) {
+                            loadVideo(filteredVideos[0].id);
+                        }
+                        return;
+                    }
+
+                    // Filter class categories for question papers
+                    const sectionEl = document.getElementById(section);
+                    if (sectionEl) {
+                        const categories = sectionEl.querySelectorAll('.class-category');
+                        categories.forEach(cat => {
+                            if (classNum === 'all') {
+                                cat.classList.remove('hidden');
+                            } else {
+                                const title = cat.querySelector('h3').textContent;
+                                if (title.includes(`Class ${classNum}`)) {
+                                    cat.classList.remove('hidden');
+                                } else {
+                                    cat.classList.add('hidden');
+                                }
+                            }
+                        });
+                    }
                 });
             });
         });
     </script>
-    <script src="youtube-classes.js"></script>
 </body>
 </html>
